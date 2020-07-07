@@ -1,3 +1,4 @@
-# MobilityDB-docker (develop)
+MobilityDB-docker (develop)
+==================================
 
-MobilityDB Docker image (version develop) built over [Postgres 12/PostGIS 2.5](https://hub.docker.com/r/postgis/postgis) and dependencies.
+MobilityDB Docker image (version develop) built over [Postgres 12/PostGIS 2.5](https://github.com/postgis/docker-postgis/tree/master/12-2.5) and dependencies.
