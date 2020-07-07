@@ -1,6 +1,9 @@
 FROM postgis/postgis:12-2.5
 LABEL maintainer="MobilityDB Project - https://github.com/ULB-CoDE-WIT/MobilityDB"
 ENV MOBILITYDB_VERSION master
+ENV POSTGRES_DBNAME=mobilitydb
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=test
 RUN apt-get update \
  && apt-get install -y \
     build-essential \
