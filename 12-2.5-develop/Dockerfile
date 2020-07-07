@@ -14,7 +14,7 @@ RUN apt-get update \
     libgsl-dev \
     libgslcblas0 \
     postgresql-server-dev-12
-RUN git clone https://github.com/ULB-CoDE-WIT/MobilityDB.git -b master /usr/local/src/MobilityDB
+RUN git clone https://github.com/ULB-CoDE-WIT/MobilityDB.git -b develop /usr/local/src/MobilityDB
 RUN mkdir /usr/local/src/MobilityDB/build
 RUN cd /usr/local/src/MobilityDB/build && \
 	cmake .. && \
