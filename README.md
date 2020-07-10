@@ -1,4 +1,4 @@
-MobilityDB-docker
+MobilityDB Docker
 ==================================
 
 <img src="https://raw.githubusercontent.com/ULB-CoDE-WIT/MobilityDB-BerlinMOD/master/doc/images/mobilitydb-logo.svg" width="200" alt="MobilityDB Logo" />
