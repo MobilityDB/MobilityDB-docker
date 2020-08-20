@@ -7,6 +7,19 @@ MobilityDB Docker
 
 This is a repository to hold various Docker images for MobilityDB releases.
 
+Quick Start
+-----------------
+
+* Clone or download this repository
+* Go inside of the required version
+* Run this command `docker-compose up -d`
+
+Environment
+-----------------
+* `POSTGRES_USER` the default value is **postgres**
+* `POSTGRES_PASSWORD` the default value is **root**
+* `PGADMIN_PORT` the default value is **5432**
+
 Usage
 -----------------
 

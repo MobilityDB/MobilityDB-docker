@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mobilitydb:
+    #image: It should be a link: mobilitydb/mobilitydb:12-2.5-develop, so I use the below build code instead. 
+    build: 
+      context: .
+      dockerfile: Dockerfile    
+    volumes:
+      - mobilitydb-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432        
+    environment:
+      - POSTGRES_DB=mobilitydb
+      - POSTGRES_USER=docker      
+      - POSTGRES_PASSWORD=docker
+    restart: on-failure
+
+volumes:
+  mobilitydb-data:    
