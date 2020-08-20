@@ -11,9 +11,13 @@ Quick Start
 -----------------
 
 * Clone or download this repository
-* Go inside of the required version
+* Go inside the required version
 * Run this command `docker-compose up -d`
 
+Once everything has started you can connect directly to MobilityDB:
+```
+psql -h localhost -p 5432 -d mobilitydb -U docker
+```
 Environment
 -----------------
 * `POSTGRES_DB` the default value is **mobilitydb**
