@@ -16,9 +16,9 @@ Quick Start
 
 Environment
 -----------------
-* `POSTGRES_USER` the default value is **postgres**
-* `POSTGRES_PASSWORD` the default value is **root**
-* `PGADMIN_PORT` the default value is **5432**
+* `POSTGRES_DB` the default value is **mobilitydb**
+* `POSTGRES_USER` the default value is **docker**
+* `POSTGRES_PASSWORD` the default value is **docker**
 
 Usage
 -----------------
