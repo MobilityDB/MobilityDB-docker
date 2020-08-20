@@ -1,5 +1,5 @@
 FROM postgis/postgis:11-2.5
-LABEL maintainer="MobilityDB Project - https://github.com/ULB-CoDE-WIT/MobilityDB"
+LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV MOBILITYDB_VERSION 1.0-beta
 ENV POSTGRES_DBNAME=mobilitydb
 RUN apt-get update \
@@ -12,7 +12,7 @@ RUN apt-get update \
     libproj-dev \
     libjson-c-dev \
     postgresql-server-dev-11 \
- && wget -O MobilityDB.tar.gz "https://github.com/ULB-CoDE-WIT/MobilityDB/archive/v${MOBILITYDB_VERSION}.tar.gz" \
+ && wget -O MobilityDB.tar.gz "https://github.com/MobilityDB/MobilityDB/archive/v${MOBILITYDB_VERSION}.tar.gz" \
  && mkdir -p /usr/local/src/MobilityDB \
  && tar \
         --extract \

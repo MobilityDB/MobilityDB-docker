@@ -1,5 +1,5 @@
 FROM postgis/postgis:12-2.5
-LABEL maintainer="MobilityDB Project - https://github.com/ULB-CoDE-WIT/MobilityDB"
+LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV MOBILITYDB_VERSION master
 ENV POSTGRES_DBNAME=mobilitydb
 RUN apt-get update \
@@ -14,7 +14,7 @@ RUN apt-get update \
     libgsl-dev \
     libgslcblas0 \
     postgresql-server-dev-12
-RUN git clone https://github.com/ULB-CoDE-WIT/MobilityDB.git -b develop /usr/local/src/MobilityDB
+RUN git clone https://github.com/MobilityDB/MobilityDB.git -b develop /usr/local/src/MobilityDB
 RUN mkdir /usr/local/src/MobilityDB/build
 RUN cd /usr/local/src/MobilityDB/build && \
 	cmake .. && \
