@@ -11,13 +11,28 @@ Quick Start
 -----------------
 
 * Clone or download this repository
-* Go inside the required version
+* Go inside the required version `cd 12-2.5-develop`
 * Run this command `docker-compose up -d`
 
-Once everything has started you can connect directly to MobilityDB:
+Then, you can connect directly with psql if you have the PostgreSQL client tool on your machine:
 ```
 psql -h localhost -p 5432 -d mobilitydb -U docker
 ```
+Connect with psql using the container:
+* Get the created container
+```
+docker ps
+```
+* Enter inside the container
+```
+docker exec -it <hash> bash
+```
+* Connect with psql
+```
+psql -d mobilitydb -U docker
+```
+
+
 Environment
 -----------------
 * `POSTGRES_DB` the default value is **mobilitydb**
