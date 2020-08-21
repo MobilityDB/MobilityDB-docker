@@ -20,9 +20,11 @@ Quick Start
 * Run this command `docker-compose up -d`
 
 Then, you can connect directly with psql if you have the PostgreSQL client tool on your machine:
+
 	```
 	psql -h localhost -p 5432 -d mobilitydb -U docker
 	```
+
 Otherwise, connect with psql using the container:
 * Get the created container
 	```
@@ -30,13 +32,12 @@ Otherwise, connect with psql using the container:
 	```
 * Enter inside the container
 	```
-	docker exec -it <hash> bash
+	docker exec -it <container_name> bash
 	```
 * Connect with psql
 	```
 	psql -d mobilitydb -U docker
 	```
-
 
 Environment
 -----------------
