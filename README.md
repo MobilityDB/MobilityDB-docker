@@ -7,6 +7,11 @@ MobilityDB Docker
 
 This is a repository to hold various Docker images for MobilityDB releases.
 
+Usage
+-----------------
+
+The images are based on the official [Postgres](https://github.com/docker-library/postgres) and [Postgis](https://github.com/postgis/docker-postgis) docker images so the documentation for the images also applies here, including the environment variables one can set, extensibility, etc.
+
 Quick Start
 -----------------
 
@@ -15,22 +20,22 @@ Quick Start
 * Run this command `docker-compose up -d`
 
 Then, you can connect directly with psql if you have the PostgreSQL client tool on your machine:
-```
-psql -h localhost -p 5432 -d mobilitydb -U docker
-```
-Connect with psql using the container:
+	```
+	psql -h localhost -p 5432 -d mobilitydb -U docker
+	```
+Otherwise, connect with psql using the container:
 * Get the created container
-```
-docker ps
-```
+	```
+	docker ps
+	```
 * Enter inside the container
-```
-docker exec -it <hash> bash
-```
+	```
+	docker exec -it <hash> bash
+	```
 * Connect with psql
-```
-psql -d mobilitydb -U docker
-```
+	```
+	psql -d mobilitydb -U docker
+	```
 
 
 Environment
@@ -39,8 +44,9 @@ Environment
 * `POSTGRES_USER` the default value is **docker**
 * `POSTGRES_PASSWORD` the default value is **docker**
 
-Usage
+Access to PgAdmin
 -----------------
-
-The images are based on the official [Postgres](https://github.com/docker-library/postgres) and [Postgis](https://github.com/postgis/docker-postgis) docker images so the documentation for the images also applies here, including the environment variables one can set, extensibility, etc.
-
+* **Host name/address** `localhost`
+* **Port** `5432`
+* **Username** as `POSTGRES_USER`, by default: `docker`
+* **Password** as `POSTGRES_PASSWORD`, by default `docker`
