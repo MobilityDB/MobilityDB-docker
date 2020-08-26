@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.0'
 services:
   mobilitydb:
     #image: It should be a link: mobilitydb/mobilitydb:12-2.5-develop, so I use the below build code instead. 

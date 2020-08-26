@@ -25,8 +25,8 @@ RUN cd /usr/local/src/MobilityDB/build && \
     make && \
     make install
 
-COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/1_initdb-mobilitydb.sh
-RUN chmod +x /docker-entrypoint-initdb.d/1_initdb-mobilitydb.sh
+COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/initdb-mobilitydb.sh
 RUN mkdir /workshopData
 RUN cd /workshopData && \
     wget https://raw.githubusercontent.com/MobilityDB/MobilityDB-workshop/master/data/gtfs_data.zip && \
