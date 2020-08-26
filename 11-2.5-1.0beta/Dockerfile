@@ -2,8 +2,8 @@ FROM postgis/postgis:11-2.5
 LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV MOBILITYDB_VERSION 1.0-beta
 ENV POSTGRES_DBNAME=mobilitydb
-ENV POSTGRES_USER=docker 
-ENV POSTGRES_PASSWORD=docker
+ENV POSTGRES_USER=postgres 
+ENV POSTGRES_PASSWORD=postgres
 RUN apt-get update \
  && apt-get install -y \
     build-essential \
@@ -28,5 +28,6 @@ RUN cd /usr/local/src/MobilityDB/build && \
 	make && \
 	make install
 
+RUN rm /docker-entrypoint-initdb.d/10_postgis.sh
 COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/
 RUN chmod +x /docker-entrypoint-initdb.d/initdb-mobilitydb.sh
