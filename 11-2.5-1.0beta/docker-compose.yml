@@ -10,8 +10,8 @@ services:
       - 5432:5432        
     environment:
       - POSTGRES_DB=mobilitydb
-      - POSTGRES_USER=postgres      
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=docker      
+      - POSTGRES_PASSWORD=docker
     restart: on-failure
 
 volumes:
