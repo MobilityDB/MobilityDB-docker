@@ -21,5 +21,6 @@ RUN cd /usr/local/src/MobilityDB/build && \
 	make && \
 	make install
 
+RUN rm /docker-entrypoint-initdb.d/10_postgis.sh
 COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/
 RUN chmod +x /docker-entrypoint-initdb.d/initdb-mobilitydb.sh
