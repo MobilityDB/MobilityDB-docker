@@ -10,6 +10,7 @@ RUN apt-get update \
     build-essential \
     cmake \
     git \
+    wget \
     libpq-dev \
     liblwgeom-dev \
     libproj-dev \
@@ -23,10 +24,9 @@ RUN apt-get update \
         --directory /usr/local/src/PostGIS \
         --strip-components 1 \
  && rm PostGIS.tar.gz \
- && cd PostGIS \
+ && cd /usr/local/src/PostGIS \
  && ./autogen.sh \
  && ./configure \
-        --with-pcredir="$(pcre-config --prefix)" \
     && make -j$(nproc) \
     && make install
 
