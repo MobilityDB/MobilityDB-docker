@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+  mobilitydb:
+    build: 
+      context: .
+      dockerfile: Dockerfile    
+    volumes:
+      - mobilitydb-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432        
+    environment:
+      - POSTGRES_DB=mobilitydb
+      - POSTGRES_USER=docker      
+      - POSTGRES_PASSWORD=docker
+    restart: on-failure
+
+volumes:
+  mobilitydb-data:    
