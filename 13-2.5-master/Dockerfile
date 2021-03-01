@@ -2,6 +2,7 @@ FROM postgres:13
 LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV POSTGIS_VERSION 2.5
 ENV MOBILITYDB_VERSION master
+ENV MOBILITYDB_GIT_HASH 1f748f145cedd79dfdc30de492aec7b7f827502c
 ENV POSTGRES_DBNAME=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
@@ -31,11 +32,14 @@ RUN apt-get update \
        postgresql-13-postgis-$POSTGIS_VERSION-scripts \
   && rm -rf /var/lib/apt/lists/*    
 
-RUN git clone https://github.com/MobilityDB/MobilityDB.git -b master /usr/local/src/MobilityDB
-RUN mkdir /usr/local/src/MobilityDB/build
-RUN cd /usr/local/src/MobilityDB/build && \
+RUN cd /usr/local/src/ \
+  && git clone https://github.com/MobilityDB/MobilityDB.git \
+  && cd MobilityDB \
+  && git checkout ${MOBILITYDB_GIT_HASH} \
+  && mkdir build \
+  && cd build && \
 	cmake .. && \
-	make && \
+	make -j$(nproc) && \
 	make install
 
 COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/
