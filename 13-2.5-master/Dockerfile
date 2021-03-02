@@ -1,11 +1,15 @@
 FROM postgres:13
+
+# Configuration Parameters
 LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV POSTGIS_VERSION 2.5
 ENV MOBILITYDB_VERSION master
-ENV MOBILITYDB_GIT_HASH 1f748f145cedd79dfdc30de492aec7b7f827502c
+ENV MOBILITYDB_GIT_HASH bce48f2ec6dffda1d19dd7fd8de191b2a4866d8b
 ENV POSTGRES_DBNAME=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
+
+# Install Prerequisites 
 RUN apt-get update \
  && apt-get install -y \
     build-essential \
@@ -32,6 +36,7 @@ RUN apt-get update \
        postgresql-13-postgis-$POSTGIS_VERSION-scripts \
   && rm -rf /var/lib/apt/lists/*    
 
+# Install MobilityDB 
 RUN cd /usr/local/src/ \
   && git clone https://github.com/MobilityDB/MobilityDB.git \
   && cd MobilityDB \
