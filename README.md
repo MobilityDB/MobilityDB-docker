@@ -15,9 +15,11 @@ Requirements
 
 Supported tags and respective Dockerfile links
 -----------------
-* Master branch of MobilityDB: `mobilitydb/mobilitydb:11-2.5-master`
+* Master branch of MobilityDB: `mobilitydb/mobilitydb:11-2.5-master`, `mobilitydb/mobilitydb:13-2.5-master` 
 * Develop branch of MobilityDB: `mobilitydb/mobilitydb:12-2.5-develop`
 * MobilityDB v1.0beta: `mobilitydb/mobilitydb:11-2.5-1.0beta`
+* MobilityDB v1.0beta2: `mobilitydb/mobilitydb:12-2.5-1.0beta2`
+* MobilityDB v1.0beta3: `mobilitydb/mobilitydb:13-2.5-1.0beta3`
 * MobilityDB Workshop: `mobilitydb/mobilitydb:12-2.5-develop-workshop`
 * MobilityDB BerlinMOD: `mobilitydb/mobilitydb:12-2.5-develop-berlinmod`
 
