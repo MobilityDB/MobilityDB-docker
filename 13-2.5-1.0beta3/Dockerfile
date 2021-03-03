@@ -50,5 +50,6 @@ RUN cd /usr/local/src/MobilityDB/build && \
 	make -j$(nproc) && \
 	make install
 
-COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/
-RUN chmod +x /docker-entrypoint-initdb.d/initdb-mobilitydb.sh
+RUN mkdir -p /docker-entrypoint-initdb.d
+COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/mobilitydb.sh
+RUN chmod +x /docker-entrypoint-initdb.d/mobilitydb.sh
