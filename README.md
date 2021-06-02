@@ -46,7 +46,7 @@ Quick Start
 
 Then, you can connect directly with psql if you have the PostgreSQL client tool on your machine:
 ```
-psql -h localhost -p 5432 -d mobilitydb -U docker
+psql -h localhost -p 25432 -d mobilitydb -U docker
 ```
 Otherwise, connect with psql using the container:
 * Get the created container
@@ -70,6 +70,6 @@ Environment
 Access to PgAdmin
 -----------------
 * **Host name/address** `localhost`
-* **Port** `5432`
+* **Port** `25432`
 * **Username** as `POSTGRES_USER`, by default: `docker`
 * **Password** as `POSTGRES_PASSWORD`, by default `docker`
