@@ -4,6 +4,11 @@ ENV MOBILITYDB_VERSION 1.0-beta
 ENV POSTGRES_DBNAME=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
+
+# Fix the Release file expired problem
+RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
+
+# Install Prerequisites 
 RUN apt-get update \
  && apt-get install -y \
     build-essential \

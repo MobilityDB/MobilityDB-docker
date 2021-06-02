@@ -8,6 +8,9 @@ ENV POSTGRES_DBNAME=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
 
+# Fix the Release file expired problem
+RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
+
 # Install Prerequisites 
 RUN apt-get update \
  && apt-get install -y \
@@ -46,9 +49,9 @@ RUN wget -O MobilityDB.tar.gz "https://github.com/MobilityDB/MobilityDB/archive/
  && rm MobilityDB.tar.gz
 RUN mkdir /usr/local/src/MobilityDB/build
 RUN cd /usr/local/src/MobilityDB/build && \
-	cmake .. && \
-	make -j$(nproc) && \
-	make install
+    cmake .. && \
+    make -j$(nproc) && \
+    make install
 
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/mobilitydb.sh
