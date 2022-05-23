@@ -1,7 +1,7 @@
 FROM postgis/postgis:12-2.5
 LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV MOBILITYDB_VERSION 1.0-beta2
-ENV POSTGRES_DBNAME=mobilitydb
+ENV POSTGRES_DB=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
 

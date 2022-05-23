@@ -5,7 +5,7 @@ LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV POSTGIS_VERSION 2.5
 ENV MOBILITYDB_VERSION master
 ENV MOBILITYDB_GIT_HASH bce48f2ec6dffda1d19dd7fd8de191b2a4866d8b
-ENV POSTGRES_DBNAME=mobilitydb
+ENV POSTGRES_DB=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
 
