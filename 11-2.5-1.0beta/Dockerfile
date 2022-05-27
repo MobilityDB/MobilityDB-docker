@@ -1,7 +1,7 @@
 FROM postgis/postgis:11-2.5
 LABEL maintainer="MobilityDB Project - https://github.com/MobilityDB/MobilityDB"
 ENV MOBILITYDB_VERSION 1.0-beta
-ENV POSTGRES_DBNAME=mobilitydb
+ENV POSTGRES_DB=mobilitydb
 ENV POSTGRES_USER=docker 
 ENV POSTGRES_PASSWORD=docker
 
@@ -34,5 +34,5 @@ RUN cd /usr/local/src/MobilityDB/build && \
 	make install
 
 RUN rm /docker-entrypoint-initdb.d/10_postgis.sh
-COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/
-RUN chmod +x /docker-entrypoint-initdb.d/initdb-mobilitydb.sh
+COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/mobilitydb.sh
+RUN chmod +x /docker-entrypoint-initdb.d/mobilitydb.sh
