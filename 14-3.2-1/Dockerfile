@@ -48,6 +48,6 @@ RUN cd /usr/local/src/MobilityDB/build && \
     make -j$(nproc) && \
     make install
 
-RUN mkdir -p /docker-entrypoint-initdb.d
+RUN rm /docker-entrypoint-initdb.d/10_postgis.sh
 COPY ./initdb-mobilitydb.sh /docker-entrypoint-initdb.d/mobilitydb.sh
 RUN chmod +x /docker-entrypoint-initdb.d/mobilitydb.sh
