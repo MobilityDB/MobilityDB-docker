@@ -1,2 +1,0 @@
-MobilityDB-docker (Workshop)
-==================================
