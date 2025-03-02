@@ -36,7 +36,7 @@ WORKDIR /usr/local/src/MobilityDB
 RUN mkdir -p build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release \
-             -DNPOINT=on -DCBUFFER=on -DPOSE=on .. \
+             -DNPOINT=on -DPOSE=on .. \
     && make -j$(nproc) \
     && make install
 

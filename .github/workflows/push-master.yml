@@ -1,11 +1,9 @@
-name: Build Docker images for MobilityDB
+name: Build Docker images for MobilityDB master branch
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '15 5 * * 1'
+  repository_dispatch:
+    types: [mobilitydb-master-update]
 
 defaults:
   run:
@@ -18,13 +16,12 @@ jobs:
       matrix:
         postgres: [13, 14, 15, 16, 17]
         postgis: [3.5]
-        mobilitydb: [1.2, master]
 
-    name: Build docker image for ${{ matrix.postgres }}-${{ matrix.postgis }}-${{ matrix.mobilitydb }}
+    name: Build docker image for ${{ matrix.postgres }}-${{ matrix.postgis }}-master
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.mobilitydb == 'master' }}
+    continue-on-error: true
     env:
-      VERSION: ${{ matrix.postgres }}-${{ matrix.postgis }}-${{ matrix.mobilitydb }}
+      VERSION: ${{ matrix.postgres }}-${{ matrix.postgis }}-master
 
     steps:
     - name: Checkout source
@@ -35,11 +32,9 @@ jobs:
 
     - name: Login to dockerhub
       uses: docker/login-action@v3
-      if: ${{  (github.ref == 'refs/heads/master') && (github.event_name != 'pull_request')  }}
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
 
     - name: Push docker image to dockerhub
-      if: ${{  (github.ref == 'refs/heads/master') && (github.event_name != 'pull_request')  }}
       run: make push
