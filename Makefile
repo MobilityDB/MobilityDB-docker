@@ -67,7 +67,7 @@ push-latest: tag-latest $(PUSH_LATEST_DEP)
 update-dockerhub-description:
 	@$(DOCKER) run --rm -v "$(PWD)":/workspace \
                -e DOCKERHUB_USERNAME='$(DOCKERHUB_USERNAME)' \
-               -e DOCKERHUB_PASSWORD='$(DOCKERHUB_ACCESS_TOKEN)' \
+               -e DOCKERHUB_PASSWORD='$(DOCKERHUB_PASSWORD)' \
                -e DOCKERHUB_REPOSITORY='$(REPO_NAME)/$(IMAGE_NAME)' \
                -e README_FILEPATH='/workspace/README.md' \
                $(DOCKERHUB_DESC_IMG)
