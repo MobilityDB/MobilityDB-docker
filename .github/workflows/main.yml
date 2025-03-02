@@ -1,0 +1,45 @@
+name: Docker PostGIS CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 5 * * 1'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  make-docker-images:
+    strategy:
+      matrix:
+        postgres: [13, 14, 15, 16, 17]
+        postgis: [3.5]
+        mobilitydb: [1.2, master]
+
+    name: Build docker image for ${{ matrix.postgres }}-${{ matrix.postgis }}-${{ matrix.mobilitydb }}
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.postgis == 'master' }}
+    env:
+      VERSION: ${{ matrix.postgres }}-${{ matrix.postgis }}-${{ matrix.mobilitydb }}
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+
+    - name: Build docker image for ${{ env.VERSION }}
+      run: make build
+
+    - name: Login to dockerhub
+      uses: docker/login-action@v3
+      if: ${{  (github.ref == 'refs/heads/master') && (github.event_name != 'pull_request')  }}
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+    - name: Push docker image to dockerhub
+      if: ${{  (github.ref == 'refs/heads/master') && (github.event_name != 'pull_request')  }}
+      run: make push
