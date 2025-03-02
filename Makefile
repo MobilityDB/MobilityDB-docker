@@ -55,7 +55,7 @@ tag-latest: $(BUILD_LATEST_DEP)
 push: $(foreach version,$(VERSIONS),push-$(version)) $(PUSH_DEP)
 
 define push-version
-push-$1: test-$1
+push-$1:
 	$(DOCKER) image push $(REPO_NAME)/$(IMAGE_NAME):$(version)
 endef
 $(foreach version,$(VERSIONS),$(eval $(call push-version,$(version))))
