@@ -1,11 +1,11 @@
 # Build stage
-ARG POSTGRES_VERSION=17
-ARG POSTGIS_VERSION=3.5
+ARG POSTGRES_VERSION=18
+ARG POSTGIS_VERSION=3.6
 
 FROM postgis/postgis:${POSTGRES_VERSION}-${POSTGIS_VERSION} AS builder
 
 # Set build arguments
-ARG MOBILITYDB_TAG=master
+ARG MOBILITYDB_TAG=stable-1.3
 
 # Install build dependencies
 RUN apt-get update \

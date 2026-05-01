@@ -1,7 +1,7 @@
 # When processing the rules for tagging and pushing container images with the
 # "latest" tag, the following variable will be the version that is considered
 # to be the latest.
-LATEST_VERSION=17-3.5-1.2
+LATEST_VERSION=18-3.6-1.3
 
 # The following logic evaluates the VERSION variable that may have been previously specified.
 # The VERSIONS variable is set to contain the version(s) to be processed.
