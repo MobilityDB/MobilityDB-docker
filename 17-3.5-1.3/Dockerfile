@@ -5,7 +5,7 @@ ARG POSTGIS_VERSION=3.5
 FROM postgis/postgis:${POSTGRES_VERSION}-${POSTGIS_VERSION} AS builder
 
 # Set build arguments
-ARG MOBILITYDB_TAG=stable-1.3
+ARG MOBILITYDB_TAG=v1.3.0
 
 # Install build dependencies
 RUN apt-get update \
