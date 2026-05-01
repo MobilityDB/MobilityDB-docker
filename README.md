@@ -56,20 +56,25 @@ docker build -t mobilitydb/mobilitydb:18-3.6-1.3 'https://github.com/MobilityDB/
 Quick Start
 -----------------
 
-* Clone or download this repository
-* Go inside the directory for the desired tag, e.g. `cd 18-3.6-1.3`
-* Run `docker-compose up -d`
+Run a container with the latest release image:
 
-Connect directly with `psql` if you have the PostgreSQL client tool installed:
+```bash
+docker run -d --name mobilitydb \
+    -e POSTGRES_USER=docker \
+    -e POSTGRES_PASSWORD=docker \
+    -e POSTGRES_DB=mobilitydb \
+    -p 25432:5432 \
+    mobilitydb/mobilitydb:latest
+```
+
+Connect with `psql` from the host:
 ```bash
 psql -h localhost -p 25432 -d mobilitydb -U docker
 ```
 
-Or connect from inside the container:
+Or from inside the container:
 ```bash
-docker ps                              # find the container name
-docker exec -it <container_name> bash
-psql -d mobilitydb -U docker
+docker exec -it mobilitydb psql -U docker -d mobilitydb
 ```
 
 Environment
