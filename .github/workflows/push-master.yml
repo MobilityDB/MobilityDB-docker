@@ -14,8 +14,10 @@ jobs:
   make-docker-images:
     strategy:
       matrix:
-        postgres: [13, 14, 15, 16, 17]
-        postgis: [3.5]
+        include:
+          - { postgres: 16, postgis: 3.5 }
+          - { postgres: 17, postgis: 3.5 }
+          - { postgres: 18, postgis: 3.6 }
 
     name: Build docker image for ${{ matrix.postgres }}-${{ matrix.postgis }}-master
     runs-on: ubuntu-latest

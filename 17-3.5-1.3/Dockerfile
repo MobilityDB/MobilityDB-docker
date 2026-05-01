@@ -1,11 +1,11 @@
 # Build stage
-ARG POSTGRES_VERSION=14
+ARG POSTGRES_VERSION=17
 ARG POSTGIS_VERSION=3.5
 
 FROM postgis/postgis:${POSTGRES_VERSION}-${POSTGIS_VERSION} AS builder
 
 # Set build arguments
-ARG MOBILITYDB_TAG=master
+ARG MOBILITYDB_TAG=stable-1.3
 
 # Install build dependencies
 RUN apt-get update \
@@ -36,7 +36,7 @@ WORKDIR /usr/local/src/MobilityDB
 RUN mkdir -p build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release \
-             -DNPOINT=on -DCBUFFER=on -DPOSE=on .. \
+             -DNPOINT=on -DCBUFFER=on -DPOSE=on -DRGEO=on .. \
     && make -j$(nproc) \
     && make install
 
