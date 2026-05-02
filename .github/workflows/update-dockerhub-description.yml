@@ -5,7 +5,9 @@ on:
     branches:
       - master
     paths:
-      - README.md  # Runs only if README.md is modified
+      - README.md
+      - .github/workflows/update-dockerhub-description.yml
+  workflow_dispatch:
 
 jobs:
   update-description:

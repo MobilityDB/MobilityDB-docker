@@ -2,7 +2,15 @@ name: Build Docker images for MobilityDB
 
 on:
   push:
+    paths:
+      - '**/Dockerfile'
+      - Makefile
+      - .github/workflows/main.yml
   pull_request:
+    paths:
+      - '**/Dockerfile'
+      - Makefile
+      - .github/workflows/main.yml
   workflow_dispatch:
   schedule:
     - cron: '15 5 * * 1'
