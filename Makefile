@@ -30,7 +30,7 @@ REPO_NAME  ?= mobilitydb
 IMAGE_NAME ?= mobilitydb
 
 DOCKER=docker
-DOCKERHUB_DESC_IMG=peterevans/dockerhub-description:latest
+DOCKERHUB_DESC_IMG=peterevans/dockerhub-description:v4.0.2
 
 build: $(foreach version,$(VERSIONS),build-$(version))
 
