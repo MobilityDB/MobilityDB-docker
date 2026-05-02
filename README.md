@@ -79,18 +79,13 @@ docker exec -it mobilitydb psql -U docker -d mobilitydb
 
 Environment
 -----------------
-The image inherits the upstream `postgres`/`postgis` environment contract; it
-doesn't bake in its own defaults. The Quick Start above passes the values below
-— change them to suit your setup.
+The image does not set its own defaults. The Quick Start above shows
+example values; without `-e` flags, the upstream postgres image's
+defaults apply.
 
-* `POSTGRES_USER` — example `docker`. Upstream default: `postgres`.
-* `POSTGRES_DB` — example `mobilitydb`. Upstream default: same as `POSTGRES_USER`.
-* `POSTGRES_PASSWORD` — example `docker`. **Required**; the container refuses
-  to start without it (or `POSTGRES_HOST_AUTH_METHOD=trust`). Use a stronger
-  value in production.
-
-The MobilityDB extension is loaded into the database named by `POSTGRES_DB`
-and into a `template_mobilitydb` template database.
+* `POSTGRES_USER`: example `docker`, upstream default `postgres`
+* `POSTGRES_DB`: example `mobilitydb`, defaults to `POSTGRES_USER`
+* `POSTGRES_PASSWORD`: example `docker`, required (no default)
 
 Access from pgAdmin
 -----------------
