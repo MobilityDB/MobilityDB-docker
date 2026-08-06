@@ -22,6 +22,8 @@ RUN apt-get update \
         libxml2-dev \
         libxslt1-dev \
          postgresql-server-dev-${PG_MAJOR} \
+        libh3-dev \
+        libh3-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and extract MobilityDB source
@@ -69,6 +71,8 @@ LABEL org.opencontainers.image.source="https://github.com/MobilityDB/MobilityDB"
 # Install runtime dependencies only
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        postgresql-${PG_MAJOR}-h3 \
+        libh3-1 \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
