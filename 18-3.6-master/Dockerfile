@@ -71,6 +71,8 @@ RUN apt-get update \
         libpq5 \
         libxml2 \
         libxslt1.1 \
+    && apt-get install -y --no-install-recommends \
+        $(apt-cache depends libgdal-dev | sed -n 's/^ *Depends: \(libgdal[0-9][0-9]*\)$/\1/p') \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy MobilityDB installed files from builder
