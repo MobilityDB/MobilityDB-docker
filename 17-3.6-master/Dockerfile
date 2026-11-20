@@ -12,8 +12,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         cmake \
-        git \
         wget \
+        git \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
@@ -21,15 +21,15 @@ RUN apt-get update \
         libpq-dev \
         libxml2-dev \
         libxslt1-dev \
-         postgresql-server-dev-${PG_MAJOR} \
+        libgdal-dev \
+        postgresql-server-dev-${PG_MAJOR} \
         libh3-dev \
         libh3-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and extract MobilityDB source
 WORKDIR /usr/local/src
-RUN wget -O MobilityDB.tar.gz \
-    "https://github.com/MobilityDB/MobilityDB/archive/refs/heads/${MOBILITYDB_TAG}.tar.gz" \
+RUN wget -O MobilityDB.tar.gz "https://github.com/MobilityDB/MobilityDB/archive/${MOBILITYDB_TAG}.tar.gz" \
     && mkdir -p MobilityDB \
     && tar \
         --extract \
@@ -37,16 +37,6 @@ RUN wget -O MobilityDB.tar.gz \
         --directory MobilityDB \
         --strip-components 1 \
     && rm MobilityDB.tar.gz
-
-# Build pgPointCloud extension
-WORKDIR /usr/local/src
-RUN git clone https://github.com/pgpointcloud/pointcloud.git \
-    && cd pointcloud \
-    && mkdir build \
-    && cd build \
-    && cmake .. \
-    && make -j$(nproc) \
-    && make install
 
 # Build MobilityDB
 WORKDIR /usr/local/src/MobilityDB
@@ -72,11 +62,17 @@ LABEL org.opencontainers.image.source="https://github.com/MobilityDB/MobilityDB"
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-${PG_MAJOR}-h3 \
+        postgresql-${PG_MAJOR}-pointcloud \
         libh3-1 \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
         libgeos-dev \
+        libpq5 \
+        libxml2 \
+        libxslt1.1 \
+    && apt-get install -y --no-install-recommends \
+        $(apt-cache depends libgdal-dev | sed -n 's/^ *Depends: \(libgdal[0-9][0-9]*\)$/\1/p') \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy MobilityDB installed files from builder
@@ -84,13 +80,6 @@ COPY --from=builder /usr/share/postgresql/${PG_MAJOR}/extension/mobilitydb* \
     /usr/share/postgresql/${PG_MAJOR}/extension/
 COPY --from=builder /usr/lib/postgresql/${PG_MAJOR}/lib/libMobilityDB* \
     /usr/lib/postgresql/${PG_MAJOR}/lib/
-COPY --from=builder /tmp/11_mobilitydb.sh \ 
-    /docker-entrypoint-initdb.d/11_mobilitydb.sh
-
-# Copy pgPointCloud extension
-COPY --from=builder /usr/share/postgresql/${PG_MAJOR}/extension/pointcloud* \
-    /usr/share/postgresql/${PG_MAJOR}/extension/
-COPY --from=builder /usr/lib/postgresql/${PG_MAJOR}/lib/pointcloud* \
-    /usr/lib/postgresql/${PG_MAJOR}/lib/
 COPY --from=builder /tmp/11_mobilitydb.sh \
     /docker-entrypoint-initdb.d/11_mobilitydb.sh
+
