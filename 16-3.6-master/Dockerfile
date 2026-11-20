@@ -13,13 +13,12 @@ RUN apt-get update \
         build-essential \
         cmake \
         wget \
+        git \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
         libgeos-dev \
         postgresql-server-dev-${PG_MAJOR} \
-        libh3-dev \
-        libh3-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and extract MobilityDB source
@@ -35,6 +34,10 @@ RUN wget -O MobilityDB.tar.gz "https://github.com/MobilityDB/MobilityDB/archive/
 
 # Build MobilityDB
 WORKDIR /usr/local/src/MobilityDB
+# MobilityDB supports one H3 release, H3_REQUIRED_VERSION of its CMakeLists.txt,
+# and its configure refuses any other, so H3 is built from its tag by the
+# tree's own .github/scripts/install-h3.sh rather than taken from a package
+RUN .github/scripts/install-h3.sh /usr/local
 RUN mkdir -p build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release \
@@ -58,12 +61,15 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-${PG_MAJOR}-h3 \
         postgresql-${PG_MAJOR}-pointcloud \
-        libh3-1 \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
         libgeos-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# The H3 library the extension links, the release built in the builder stage
+COPY --from=builder /usr/local/lib/libh3.so* /usr/local/lib/
+RUN ldconfig
 
 # Copy MobilityDB installed files from builder
 COPY --from=builder /usr/share/postgresql/${PG_MAJOR}/extension/mobilitydb* /usr/share/postgresql/${PG_MAJOR}/extension/
