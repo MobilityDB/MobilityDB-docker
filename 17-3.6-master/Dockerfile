@@ -1,6 +1,6 @@
 # Build stage
-ARG POSTGRES_VERSION=16
-ARG POSTGIS_VERSION=3.5
+ARG POSTGRES_VERSION=17
+ARG POSTGIS_VERSION=3.6
 
 FROM postgis/postgis:${POSTGRES_VERSION}-${POSTGIS_VERSION} AS builder
 
@@ -13,13 +13,16 @@ RUN apt-get update \
         build-essential \
         cmake \
         wget \
+        git \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
         libgeos-dev \
+        libpq-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        libgdal-dev \
         postgresql-server-dev-${PG_MAJOR} \
-        libh3-dev \
-        libh3-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and extract MobilityDB source
@@ -35,10 +38,14 @@ RUN wget -O MobilityDB.tar.gz "https://github.com/MobilityDB/MobilityDB/archive/
 
 # Build MobilityDB
 WORKDIR /usr/local/src/MobilityDB
+# MobilityDB supports one H3 release, H3_REQUIRED_VERSION of its CMakeLists.txt,
+# and its configure refuses any other, so H3 is built from its tag by the
+# tree's own .github/scripts/install-h3.sh rather than taken from a package
+RUN .github/scripts/install-h3.sh /usr/local
 RUN mkdir -p build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release \
-             -DNPOINT=on -DCBUFFER=on -DPOSE=on -DRGEO=on -DH3=on .. \
+             -DALL=on .. \
     && make -j$(nproc) \
     && make install
 
@@ -58,14 +65,26 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-${PG_MAJOR}-h3 \
         postgresql-${PG_MAJOR}-pointcloud \
-        libh3-1 \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
         libgeos-dev \
+        libpq5 \
+        libxml2 \
+        libxslt1.1 \
+    && apt-get install -y --no-install-recommends \
+        $(apt-cache depends libgdal-dev | sed -n 's/^ *Depends: \(libgdal[0-9][0-9]*\)$/\1/p') \
     && rm -rf /var/lib/apt/lists/*
 
+# The H3 library the extension links, the release built in the builder stage
+COPY --from=builder /usr/local/lib/libh3.so* /usr/local/lib/
+RUN ldconfig
+
 # Copy MobilityDB installed files from builder
-COPY --from=builder /usr/share/postgresql/${PG_MAJOR}/extension/mobilitydb* /usr/share/postgresql/${PG_MAJOR}/extension/
-COPY --from=builder /usr/lib/postgresql/${PG_MAJOR}/lib/libMobilityDB* /usr/lib/postgresql/${PG_MAJOR}/lib/
-COPY --from=builder /tmp/11_mobilitydb.sh /docker-entrypoint-initdb.d/11_mobilitydb.sh
+COPY --from=builder /usr/share/postgresql/${PG_MAJOR}/extension/mobilitydb* \
+    /usr/share/postgresql/${PG_MAJOR}/extension/
+COPY --from=builder /usr/lib/postgresql/${PG_MAJOR}/lib/libMobilityDB* \
+    /usr/lib/postgresql/${PG_MAJOR}/lib/
+COPY --from=builder /tmp/11_mobilitydb.sh \
+    /docker-entrypoint-initdb.d/11_mobilitydb.sh
+

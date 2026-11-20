@@ -1,11 +1,11 @@
 # Build stage
 ARG POSTGRES_VERSION=16
-ARG POSTGIS_VERSION=3.5
+ARG POSTGIS_VERSION=3.6
 
 FROM postgis/postgis:${POSTGRES_VERSION}-${POSTGIS_VERSION} AS builder
 
 # Set build arguments
-ARG MOBILITYDB_TAG=v1.2.1
+ARG MOBILITYDB_TAG=master
 
 # Install build dependencies
 RUN apt-get update \
@@ -13,6 +13,7 @@ RUN apt-get update \
         build-essential \
         cmake \
         wget \
+        git \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
@@ -33,10 +34,14 @@ RUN wget -O MobilityDB.tar.gz "https://github.com/MobilityDB/MobilityDB/archive/
 
 # Build MobilityDB
 WORKDIR /usr/local/src/MobilityDB
+# MobilityDB supports one H3 release, H3_REQUIRED_VERSION of its CMakeLists.txt,
+# and its configure refuses any other, so H3 is built from its tag by the
+# tree's own .github/scripts/install-h3.sh rather than taken from a package
+RUN .github/scripts/install-h3.sh /usr/local
 RUN mkdir -p build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release \
-             -DNPOINT=on -DPOSE=on .. \
+             -DNPOINT=on -DCBUFFER=on -DPOSE=on -DRGEO=on -DH3=on .. \
     && make -j$(nproc) \
     && make install
 
@@ -54,11 +59,17 @@ LABEL org.opencontainers.image.source="https://github.com/MobilityDB/MobilityDB"
 # Install runtime dependencies only
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        postgresql-${PG_MAJOR}-h3 \
+        postgresql-${PG_MAJOR}-pointcloud \
         libproj-dev \
         libjson-c-dev \
         libgsl-dev \
         libgeos-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# The H3 library the extension links, the release built in the builder stage
+COPY --from=builder /usr/local/lib/libh3.so* /usr/local/lib/
+RUN ldconfig
 
 # Copy MobilityDB installed files from builder
 COPY --from=builder /usr/share/postgresql/${PG_MAJOR}/extension/mobilitydb* /usr/share/postgresql/${PG_MAJOR}/extension/
