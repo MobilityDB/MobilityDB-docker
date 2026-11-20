@@ -18,26 +18,19 @@ Tags
 Image names follow the pattern `mobilitydb/mobilitydb:<PG>-<PostGIS>-<MobilityDB>`. Each combination has a corresponding directory in this repository containing its `Dockerfile`.
 
 **MobilityDB 1.3 (latest stable):**
-* `mobilitydb/mobilitydb:14-3.5-1.3`
-* `mobilitydb/mobilitydb:15-3.5-1.3`
-* `mobilitydb/mobilitydb:16-3.5-1.3`
-* `mobilitydb/mobilitydb:17-3.5-1.3`
+* `mobilitydb/mobilitydb:14-3.6-1.3`
+* `mobilitydb/mobilitydb:15-3.6-1.3`
+* `mobilitydb/mobilitydb:16-3.6-1.3`
+* `mobilitydb/mobilitydb:17-3.6-1.3`
 * `mobilitydb/mobilitydb:18-3.6-1.3`
 * `mobilitydb/mobilitydb:latest` — alias for `18-3.6-1.3`
-
-**MobilityDB 1.2:**
-* `mobilitydb/mobilitydb:13-3.5-1.2`
-* `mobilitydb/mobilitydb:14-3.5-1.2`
-* `mobilitydb/mobilitydb:15-3.5-1.2`
-* `mobilitydb/mobilitydb:16-3.5-1.2`
-* `mobilitydb/mobilitydb:17-3.5-1.2`
 
 **MobilityDB development (`master` branch):**
 * `mobilitydb/mobilitydb:16-3.6-master`
 * `mobilitydb/mobilitydb:17-3.6-master`
 * `mobilitydb/mobilitydb:18-3.6-master`
 
-The `master` images are rebuilt automatically on every push to `master` in the [MobilityDB](https://github.com/MobilityDB/MobilityDB) repository. The release-tagged images (`-1.2`, `-1.3`) are rebuilt on a weekly schedule from the corresponding `stable-*` branch.
+The `master` images are rebuilt automatically on every push to `master` in the [MobilityDB](https://github.com/MobilityDB/MobilityDB) repository. The release-tagged images (`-1.3`) are rebuilt on a weekly schedule from the corresponding `stable-*` branch.
 
 Installation
 -----------------
