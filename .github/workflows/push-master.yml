@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - { postgres: 16, postgis: 3.5 }
-          - { postgres: 17, postgis: 3.5 }
+          - { postgres: 16, postgis: 3.6 }
+          - { postgres: 17, postgis: 3.6 }
           - { postgres: 18, postgis: 3.6 }
 
     name: Build docker image for ${{ matrix.postgres }}-${{ matrix.postgis }}-master

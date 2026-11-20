@@ -33,8 +33,8 @@ Image names follow the pattern `mobilitydb/mobilitydb:<PG>-<PostGIS>-<MobilityDB
 * `mobilitydb/mobilitydb:17-3.5-1.2`
 
 **MobilityDB development (`master` branch):**
-* `mobilitydb/mobilitydb:16-3.5-master`
-* `mobilitydb/mobilitydb:17-3.5-master`
+* `mobilitydb/mobilitydb:16-3.6-master`
+* `mobilitydb/mobilitydb:17-3.6-master`
 * `mobilitydb/mobilitydb:18-3.6-master`
 
 The `master` images are rebuilt automatically on every push to `master` in the [MobilityDB](https://github.com/MobilityDB/MobilityDB) repository. The release-tagged images (`-1.2`, `-1.3`) are rebuilt on a weekly schedule from the corresponding `stable-*` branch.
